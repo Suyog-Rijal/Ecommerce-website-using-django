@@ -9,8 +9,8 @@ This is a feature-rich e-commerce platform built with Django. It includes Google
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/your-username/your-repo-name.git
-    cd your-repo-name
+    git clone https://github.com/Suyog-Rijal/Ecommerce-website-using-django
+    cd Ecommerce-website-using-django
     ```
 
 2. **Create a virtual environment:**
@@ -69,6 +69,7 @@ This is a feature-rich e-commerce platform built with Django. It includes Google
      - Video tutorials:
        - [Google OAuth Integration in Django - Tutorial 1](https://www.youtube.com/watch?v=yO6PP0vEOMc)
        - [Google OAuth with Allauth - Tutorial 2](https://www.youtube.com/watch?v=LyDdfO6o_G4)
+   - Replace this line in templates/login.html after google the above process is done to enable google login:```href="{% provider_login_url 'google' %}"> ```
 
 
 8. **Configure Stripe Payment:**
@@ -77,8 +78,6 @@ This is a feature-rich e-commerce platform built with Django. It includes Google
     - Obtain your **Publishable Key** and **Secret Key**.
     - Update your `settings.py`:
         ```python
-        from decouple import config
-
         STRIPE_PUBLISHABLE_KEY = config('STRIPE_PUBLISHABLE_KEY')
         STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY')
         ```
@@ -97,15 +96,16 @@ This is a feature-rich e-commerce platform built with Django. It includes Google
 
 <table>
   <tr>
-    <td><img src="demo-image1.png" alt="Product Page" style="width: 100%;"/></td>
-    <td><img src="demo-image2.png" alt="Checkout Page" style="width: 100%;"/></td>
+    <td><img src="img.png" alt="Product Page" style="width: 100%;"/></td>
+    <td><img src="img_1.png" alt="Checkout Page" style="width: 100%;"/></td>
   </tr>
   <tr>
-    <td><img src="demo-image3.png" alt="Login Page" style="width: 100%;"/></td>
-    <td><img src="demo-image4.png" alt="Admin Dashboard" style="width: 100%;"/></td>
+    <td><img src="img_2.png" alt="Login Page" style="width: 100%;"/></td>
+    <td><img src="img_3.png" alt="Admin Dashboard" style="width: 100%;"/></td>
   </tr>
   <tr>
-    <td><img src="demo-image3.png" alt="Login Page" style="width: 100%;"/></td>
+    <td><img src="img_4.png" alt="Login Page" style="width: 100%;"/></td>
+    <td><img src="img_5.png" alt="Login Page" style="width: 100%;"/></td>
   </tr>
 </table>
 
