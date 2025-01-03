@@ -1,0 +1,66 @@
+<div class=''>
+    <div class='h-full flex flex-col gap-3'>
+        <div class='flex gap-2'>
+            <div class='text-7xl text-pink-500'>
+                <ion-icon name="newspaper-outline"></ion-icon>
+            </div>
+            <div>
+                <h1 class='text-xl font-bold'>Personal Information</h1>
+                <p class='text-xs text-gray-400'>Access your order history to review details of past purchases,
+                                                 including order dates, items purchased, and shipping information.</p>
+            </div>
+        </div>
+
+        <div class='flex flex-col gap-2'>
+            <ul class='flex gap-10 font-semibold'>
+                <li class='hover:text-pink-500 duration-500 cursor-pointer'>All Orders</li>
+                <li class='hover:text-pink-500 duration-500 cursor-pointer'>Completed</li>
+                <li class='hover:text-pink-500 duration-500 cursor-pointer'>Cancelled</li>
+            </ul>
+
+            <div>
+                <ul class='flex p-2 justify-between bg-white rounded-md'>
+                    <li class='w-[15%] text-center'>Order id</li>
+                    <li class='w-[15%] text-center'>Order date</li>
+                    <li class='w-[15%] text-center'>Payment</li>
+                    <li class='w-[15%] text-center'>Status</li>
+                    <li class='w-[15%] text-center'>Total</li>
+                </ul>
+            </div>
+
+            <div class='overflow-y-scroll rounded-md h-[300px]'>
+                
+                {% if orders %}
+                    {% for each in orders %}
+                        <div class='flex justify-between shadow-md py-3 rounded-md p-1 items-center px-2'>
+                            <div class='flex gap-1 items-center w-[15%] justify-center'>
+                                <p class='w-full now text-center'>{{ each.id }}</p>
+                            </div>
+
+                            <p class='w-[15%] text-center'>{{ each.created_at|date:"M d, Y" }}</p>
+                            <p class='w-[15%] text-center'>Credit card</p>
+                            <p class='w-[15%] text-center rounded-md
+                        {% if each.status == "pending" %}
+                            bg-[#FFF8E1] text-[#FFC107]
+                        {% elif each.status == "shipped" %}
+                            bg-[#E0F7FA] text-[#17A2B8]
+                        {% elif each.status == "delivered" %}
+                            bg-[#E8F5E9] text-[#28A745]
+                        {% elif each.status == "canceled" %}
+                            bg-[#FDECEA] text-[#DC3545]
+                        {% endif %}
+                        px-2 py-1 rounded'>{{ each.status }}</p>
+                            <p class='w-[15%] text-center'>Rs. {{ each.total }}</p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class='flex justify-center items-center h-[200px]'>
+                        <p class='text-gray-400'>No orders found</p>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+</div>

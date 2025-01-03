@@ -1,0 +1,12 @@
+{% extends 'index.html' %}
+{% block root %}
+    <div class="p-4 w-[50%] h-full flex flex-col items-center justify-center">
+        <h1 class="text-2xl">Your payment have been <span class="text-red-500">canceled.</span></h1>
+        <p class="text-md">Please try again.</p>
+        <a href="{% url 'home' %}" class="text-white bg-pink-700 p-2 rounded-md mt-4">Go back to home</a>
+    </div>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

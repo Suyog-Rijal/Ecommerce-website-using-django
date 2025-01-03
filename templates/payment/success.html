@@ -1,0 +1,17 @@
+{% extends 'index.html' %}
+{% block root %}
+    <div class="p-4 w-[50%] h-full flex flex-col items-center justify-center">
+        <h1 class="text-2xl">Your payment have been received.</h1>
+        <p class="text-sm">Thank you for shopping with us.</p>
+        <a href="{% url 'home' %}" class="text-white bg-pink-500 p-2 rounded-md mt-4">Go back to home</a>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        ls = localStorage.getItem('cart');
+        if (ls) {
+            localStorage.removeItem('cart');
+        }
+    </script>
+{% endblock %}

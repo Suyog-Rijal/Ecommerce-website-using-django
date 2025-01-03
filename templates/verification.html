@@ -1,0 +1,87 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block root %}
+    <div class="fixed inset-0 bg-opacity-25 bg-black backdrop-blur-sm flex justify-center items-center z-50">
+        <form method="post" class='bg-white flex flex-col p-8 items-center justify-center gap-4 rounded-3xl shadow-2xl relative overflow-clip'>
+            {% csrf_token %}
+            <a href="{% url 'login_view' %}" class='text-2xl w-8 text-center rounded-full cursor-pointer absolute top-0 right-0 mr-4 mt-2'>
+                <ion-icon name="close-circle-outline"></ion-icon>
+            </a>
+            <div class='absolute p-1 bg-pink-500 bottom-0 w-full'></div>
+
+
+            <div class="w-20 h-20">
+                <img src="{% static 'system/logo.png' %}" alt="" class="w-full h-full object-cover"/>
+            </div>
+            <h1 class='text-2xl text-pink-500 font-semibold'>Please check your email</h1>
+            <p>we've sent a code to {{ email }}</p>
+            <div class='flex gap-4 p-1'>
+                <input type="hidden" name="email" value="{{ email }}">
+                <label for='c0'></label><input required id='c0' type="number" name='c0' maxlength="1"
+                                               class='border-2 border-gray-300 w-14 h-14 input-no-spinner text-center outline-none text-3xl rounded-lg'
+                                               autoFocus/>
+                <label for='c1'></label><input required id='c1' type="number" name='c1' maxlength="1"
+                                               class='border-2 border-gray-300 w-14 h-14 input-no-spinner text-center outline-none text-3xl rounded-lg'/>
+                <label for='c2'></label><input required id='c2' type="number" name='c2' maxlength="1"
+                                               class='border-2 border-gray-300 w-14 h-14 input-no-spinner text-center outline-none text-3xl rounded-lg'/>
+                <label for='c3'></label><input required id='c3' type="number" name='c3' maxlength="1"
+                                               class='border-2 border-gray-300 w-14 h-14 input-no-spinner text-center outline-none text-3xl rounded-lg'/>
+                <label for='c4'></label><input required id='c4' type="number" name='c4' maxlength="1"
+                                               class='border-2 border-gray-300 w-14 h-14 input-no-spinner text-center outline-none text-3xl rounded-lg'/>
+                <label for='c5'></label><input required id='c5' type="number" name='c5' maxlength="1"
+                                               class='border-2 border-gray-300 w-14 h-14 input-no-spinner text-center outline-none text-3xl rounded-lg'/>
+            </div>
+            <button type="submit" class='outline-none border-0 w-full bg-pink-500 p-1.5 rounded-md text-white text-lg active:scale-95 hover:bg-pink-400 duration-500'>
+                verify
+            </button>
+            <p>Didnt received the code? <span
+                    class='hover:text-pink-500 duration-500 hover:underline underline-offset-4'><button onclick="resendVerification()">Resend?</button></span></p>
+        </form>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        const inputs = document.querySelectorAll("input[type='number']");
+
+        inputs.forEach((input, index) => {
+            input.addEventListener("input", (e) => {
+                const value = e.target.value;
+                if (value && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+            });
+
+            input.addEventListener("keydown", (e) => {
+                if (e.key === "Backspace" && !input.value && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+
+            input.addEventListener("paste", (e) => {
+                e.preventDefault();
+                const pasteData = (e.clipboardData || window.clipboardData).getData("text");
+                if (/^\d+$/.test(pasteData)) {
+                    pasteData.split("").forEach((char, idx) => {
+                        if (index + idx < inputs.length) {
+                            inputs[index + idx].value = char;
+                            if (index + idx < inputs.length - 1) {
+                                inputs[index + idx + 1].focus();
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        function resendVerification() {
+            $.ajax({
+                url: "{% url 'verification' %}",
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                method: 'POST',
+            })
+        }
+    </script>
+{% endblock %}

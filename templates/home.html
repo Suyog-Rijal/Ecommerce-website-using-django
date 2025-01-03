@@ -1,0 +1,579 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block root %}
+    <div class='flex flex-col items-center w-full relative overflow-y-clip'>
+        <div class='h-[150px] w-1/3 bg-gradient-to-br from-orange-100 to-white absolute top-0 left-0 blur-3xl'></div>
+        <div class='h-[150px] w-1/3 bg-gradient-to-bl from-pink-200 to-white absolute top-0 right-0 blur-3xl'></div>
+
+
+        {#        ---------------------SEARCH-----------------#}
+        <div class='px-14 w-full flex items-center justify-center'>
+            <div class='py-6 flex w-full justify-center relative'>
+                <div class='flex flex-col gap-6 w-2/5'>
+                    <h1 class='text-3xl font-[600]'>What are you looking for?</h1>
+                    <div id="search-box"
+                         class='input-container flex group justify-center items-center p-3 rounded-2xl bg-white shadow-md border-2 border-gray-100 relative'>
+                        <div class='flex text-xl group-focus-within:rotate-90 transform transition-transform duration-300'>
+                            <ion-icon name="search-outline"></ion-icon>
+                        </div>
+                        <label for="search-input"></label><input id="search-input" type="text"
+                                                                 class='outline-none w-full text-md px-2 bg-transparent'
+                                                                 placeholder='Search for Clothes'/>
+
+                        <ul id="search-result"
+                            class='w-full z-10 max-h-60 overflow-y-scroll p-2 absolute text-lg bg-white mt-1 border-2 border-gray-100 shadow px-4 flex flex-col gap-1 top-full rounded-xl hidden'>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        {#        --------------------------CATEGORIES---------------------#}
+        <div class='w-2/3 px-24 flex items-center justify-evenly pt-2  pb-5'>
+            
+            <div class='group hover:cursor-pointer'>
+                <div class='w-[60px] h-[60px] transition-transform transform group-hover:scale-105 group-hover:shadow-lg duration-500'>
+                    <img src='{% static "categories/women.png" %}' alt='Women' class='w-full h-full object-cover'/>
+                </div>
+                <div class='flex flex-col justify-center items-center mt-1 transition-all duration-300 group-hover:text-pink-500'>
+                    <p class='font-semibold'>Women</p>
+                    <p class='text-xs text-red-600 group-hover:text-red-800'>Upto 40% off</p>
+                </div>
+            </div>
+
+            <div class='group hover:cursor-pointer'>
+                <div class='w-[60px] h-[60px] transition-transform transform group-hover:scale-105 group-hover:shadow-lg duration-500'>
+                    <img src='{% static "categories/men.png" %}' alt='Men' class='w-full h-full object-cover'/>
+                </div>
+                <div class='flex flex-col justify-center items-center mt-1 transition-all duration-300 group-hover:text-pink-500'>
+                    <p class='font-semibold'>Men</p>
+                    <p class='text-xs text-red-600 group-hover:text-red-800'>Upto 40% off</p>
+                </div>
+            </div>
+
+            <div class='group hover:cursor-pointer'>
+                <div class='w-[60px] h-[60px] transition-transform transform group-hover:scale-105 group-hover:shadow-lg duration-500'>
+                    <img src='{% static "categories/kids.png" %}' alt='Kids' class='w-full h-full object-cover'/>
+                </div>
+                <div class='flex flex-col justify-center items-center mt-1 transition-all duration-300 group-hover:text-pink-500'>
+                    <p class='font-semibold'>Kids</p>
+                    <p class='text-xs text-red-600 group-hover:text-red-800'>Flat 25% off</p>
+                </div>
+            </div>
+
+            <div class='group hover:cursor-pointer'>
+                <div class='w-[60px] h-[60px] transition-transform transform group-hover:scale-105 group-hover:shadow-lg duration-500'>
+                    <img src='{% static "categories/beauty.png" %}' alt='Beauty' class='w-full h-full object-cover'/>
+                </div>
+                <div class='flex flex-col justify-center items-center mt-1 transition-all duration-300 group-hover:text-pink-500'>
+                    <p class='font-semibold'>Beauty</p>
+                    <p class='text-xs text-red-600 group-hover:text-red-800 invisible'>Upto 40% off</p>
+                </div>
+            </div>
+
+            <div class='group hover:cursor-pointer'>
+                <div
+                        class='w-[60px] h-[60px] transition-transform transform group-hover:scale-105 group-hover:shadow-lg duration-500'>
+                    <img src='{% static "categories/plus.png" %}' alt='Plus' class='w-full h-full object-cover'/>
+                </div>
+                <div
+                        class='flex flex-col justify-center items-center mt-1 transition-all duration-300 group-hover:text-pink-500'>
+                    <p class='font-semibold'>Plus</p>
+                    <p class='text-xs text-red-600 group-hover:text-red-800'>Save upto 30%</p>
+                </div>
+            </div>
+
+            <div class='group hover:cursor-pointer'>
+                <div
+                        class='w-[60px] h-[60px] transition-transform transform group-hover:scale-105 group-hover:shadow-lg duration-500'>
+                    <img src='{% static "categories/offers.png" %}' alt='Offers' class='w-full h-full object-cover'/>
+                </div>
+                <div
+                        class='flex flex-col justify-center items-center mt-1 transition-all duration-300 group-hover:text-pink-500'>
+                    <p class='font-semibold'>Offers</p>
+                    <p class='text-xs text-red-600 group-hover:text-red-800 invisible'>Upto 40% off</p>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        {#        -----------------SLIDER----------------#}
+        <div class='w-full px-14 py-6 relative select-none'>
+            <div
+                    class='bg-gradient-to-r from-white to-transparent h-full w-[200px] top-0 left-0 z-10 absolute'></div>
+            <div
+                    class='bg-gradient-to-r from-transparent to-white h-full w-[200px] top-0 right-0 z-10 absolute'></div>
+
+            <div class="w-full overflow-x-auto flex gap-8 scroll-snap-x hide-scrollbar">
+                <div class="w-[600px] h-auto flex-shrink-0 scroll-snap-center">
+                    <img src='{% static "banners/aesthetic.jpg" %}' alt='x' class='w-full h-full object-cover'/>
+                </div>
+                <div class="w-[600px] h-auto flex-shrink-0 scroll-snap-center">
+                    <img src='{% static "banners/megasale.jpg" %}' alt='x' class='w-full h-full object-cover'/>
+                </div>
+                <div class="w-[600px] h-auto flex-shrink-0 scroll-snap-center">
+                    <img src='{% static "banners/autumnsale.png" %}' alt='x' class='w-full h-full object-cover'/>
+                </div>
+                <div class="w-[600px] h-auto flex-shrink-0 scroll-snap-center">
+                    <img src='{% static "banners/KidsSales.jpeg" %}' alt='x' class='w-full h-full object-cover'/>
+                </div>
+                <div class="w-[600px] h-auto flex-shrink-0 scroll-snap-center">
+                    <img src='{% static "banners/shoessale.png" %}' alt='x' class='w-full h-full object-cover'/>
+                </div>
+            </div>
+        </div>
+
+
+        {#        ---------------------FLASH SALES-----------------#}
+        <div class='flex flex-col w-full px-14 justify-center'>
+            <div class='flex justify-between px-3'>
+                <h1 class='text-xl font-semibold'>Flash Sales</h1>
+                <a class='text-pink-500 flex justify-center items-center gap-1' href="{% url 'products' %}">Explore
+                                                                                                                more
+                    <ion-icon name="arrow-forward-outline"></ion-icon>
+                </a>
+            </div>
+
+            <div class='w-full flex justify-between scroll-snap-x hide-scrollbar'>
+
+                {#----------------CARD----------------#}
+                {% for each in flash_sales %}
+                    <div class='p-3 gap-2 flex flex-col justify-between items-center rounded-xl group hover:shadow-xl duration-500'>
+                        <div class='rounded-xl'>
+                            <div class='px-2 flex items-center justify-between'>
+                                <p class="text-gray-400 text-sm">BEST SALES</p>
+                                <img src='{% static 'system/express_delivery.png' %}' alt='x'
+                                     class='w-14 {% if not each.express_delivery %}invisible{% else %}{% endif %}'/>
+                            </div>
+                            <div class='w-[200px] h-[150px] object-cover'>
+                                <a href="{% url 'product_detail' each.id %}">
+                                    <img src="{{ each.primary_image }}" alt='x' class='w-full h-full object-cover'/>
+                                </a>
+                            </div>
+                            <div class='px-2 flex justify-between items-center'>
+                                <p class='text-gray-500 text-sm'>{{ each.rating }}<span><ion-icon
+                                        name="star"></ion-icon></span>/5(311)
+                                </p>
+                                <div class='text-lg text-pink-500 invisible group-hover:visible'>
+                                    <ion-icon name="heart-outline"></ion-icon>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class='flex flex-col gap-1 w-full px-2'>
+                            <p class='text-sm'>{% if each.discount_percent > 0 %}
+                                <span class="text-red-500">{{ each.discount_percent }}% off</span>{% else %}
+                                <span class="text-gray-400">Offer ended</span>{% endif %}</p>
+                            <p class='font-semibold'>
+                                {% if each.discount_percent > 0 %}
+                                    <span>Rs.{{ each.get_discounted_price }} </span>
+                                    <span class='decoration-1 line-through text-gray-500'>Rs.{{ each.price }}</span></p>
+                                {% else %}
+                                    <span>Rs.{{ each.price }}</span>
+                                {% endif %}
+
+                            <p class='text-sm'>{{ each.short_name }}</p>
+                        </div>
+                        <div class='flex items-center gap-5 w-full'>
+                            {% if each.stock == 0 %}
+                                <button class="w-full p-1 bg-red-500 text-white rounded-lg cursor-not-allowed">
+                                    Out of Stock
+                                </button>
+                            {% else %}
+                                <button
+                                        id="{{ each.id }}"
+                                        data-id="{{ each.id }}"
+                                        data-short_name="{{ each.short_name }}"
+                                        data-full_name="{{ each.full_name }}"
+                                        data-description="{{ each.description }}"
+                                        data-price="{{ each.price }}"
+                                        data-image="{{ each.primary_image }}"
+                                        data-stock="{{ each.stock }}"
+                                        data-category="{{ each.category }}"
+                                        onclick="toggleCart(this)"
+                                        class="w-full p-1 bg-pink-500 text-white rounded-lg">
+                                    Add to Cart
+                                </button>
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+
+            </div>
+        </div>
+
+
+        {#        ---------------------DISCOUNTS-----------------#}
+        <div class='w-full px-14 flex justify-between py-10 scroll-snap-x hide-scrollbar'>
+            <img src="{% static 'system/50%.png' %}" alt='x'/>
+            <img src="{% static 'system/150%.png' %}" alt='x'/>
+            <img src="{% static 'system/200%.png' %}" alt='x'/>
+            <img src="{% static 'system/300%.png' %}" alt='x'/>
+            <img src="{% static 'system/350%.png' %}" alt='x'/>
+        </div>
+
+
+        {#    ---------------------------------PRODUCT OF THE DAY---------------------------------#}
+        <div class='flex flex-col w-full px-14 justify-center py-4'>
+            <div class='flex justify-between px-3'>
+                <h1 class='text-xl font-semibold'>Product Of The Day</h1>
+                <a class='text-pink-500 flex justify-center items-center gap-1' href="{% url 'products' %}">Explore
+                                                                                                                more
+                    <ion-icon name="arrow-forward-outline"></ion-icon>
+                </a>
+            </div>
+
+            <div class='w-full flex justify-between scroll-snap-x hide-scrollbar'>
+                {#                ----------------CARD----------------#}
+                {% for each in product_of_the_day %}
+                    <div class='p-3 gap-3 flex flex-col justify-between items-center group transition-transform duration-300 rounded-xl'>
+                        <div class='rounded-xl shadow-md border-2 border-gray-100'>
+                            <div class='w-[200px] h-[200px] object-cover overflow-hidden'>
+                                <a href="{% url 'product_detail' each.id %}">
+                                    <img src="{{ each.primary_image }}" alt='x'
+                                         class='w-full h-full object-cover rounded-md transition-transform duration-300 group-hover:scale-110'/>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class='flex flex-col gap-1 w-full px-2'>
+                            <div class='flex justify-between'>
+                                {% if each.discount_percent > 0 %}
+                                    <p class='text-sm text-red-600'>{{ each.discount_percent }}% off</p>
+                                {% else %}
+                                    <p class="text-sm text-gray-300">No Discount</p>
+                                {% endif %}
+                                <div class='text-pink-500 invisible group-hover:visible'>
+                                    <ion-icon name="heart-outline"></ion-icon>
+                                </div>
+                            </div>
+                            <p class='font-semibold'>
+                                {% if each.discount_percent > 0 %}
+                                    <span>Rs.{{ each.get_discounted_price }} </span>
+                                    <span class='decoration-1 line-through text-gray-500'>Rs.{{ each.price }}</span></p>
+                                {% else %}
+                                    <span>Rs.{{ each.price }}</span>
+                                {% endif %}
+                            <p class='text-sm'>{{ each.short_name }}<br/> {{ each.category }}</p>
+                        </div>
+                        <div class='flex items-center gap-5 w-full'>
+                            {% if each.stock == 0 %}
+                            <button class="w-full p-1 bg-red-500 text-white rounded-lg cursor-not-allowed">
+                                Out of Stock
+                            </button>
+                            {% else %}
+                                <button
+                                        id="{{ each.id }}"
+                                        data-id="{{ each.id }}"
+                                        data-short_name="{{ each.short_name }}"
+                                        data-full_name="{{ each.full_name }}"
+                                        data-description="{{ each.description }}"
+                                        data-price="{{ each.price }}"
+                                        data-image="{{ each.primary_image }}"
+                                        data-stock="{{ each.stock }}"
+                                        data-category="{{ each.category }}"
+                                        onclick="toggleCart(this)"
+                                        class="w-full p-1 bg-pink-500 text-white rounded-lg">
+                                    Add to Cart
+                                </button>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                {% empty %}
+                    <p class="w-full text-center text-2xl text-red-500">Something went wrong!!</p>
+                {% endfor %}
+
+            </div>
+        </div>
+
+
+        {#    ----------------------------------------BEST BEAUTY PRODUCTS----------------------------------------#}
+        <div class='w-full px-14 py-10 gap-3 flex justify-center flex-col'>
+            <h1 class='text-xl font-semibold'>Best Beauty Products</h1>
+
+            <div class='flex justify-between flex-wrap gap-8'>
+
+                {% for each in best_beauty_products %}
+                    <div class='flex justify-center items-center flex-col rounded-2xl border-2 bg-pink-100 transition-transform duration-500 group'>
+                        <div class='h-[170px] w-[320px] overflow-hidden rounded-tl-2xl rounded-tr-2xl'>
+                            <img src='../static/banners/best_beauty_products/{{ each }}'
+                                 alt=`X`
+                                 class='w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 group-hover:shadow-lg'
+                            />
+                        </div>
+                        <div class='flex justify-between items-center w-full px-4 py-1'>
+                            <div>
+                                <p class='font-semibold'>Flat 4% Discount</p>
+                                <p class='text-sm text-gray-600'>Trust in a Classic</p>
+                            </div>
+                            <div
+                                    class='bg-pink-500 text-white py-1.5 px-2 rounded-md flex justify-between items-center'>
+                                <ion-icon name="arrow-forward-outline"></ion-icon>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+
+                {% endfor %}
+
+            </div>
+        </div>
+
+
+        {#    -----------------------ATTRACTIVE ACCESSORIES-----------------------#}
+        <div class='px-14 py-4 w-full flex flex-col gap-1'>
+            <h1 class='text-xl font-semibold'>Attractive Accessories for you</h1>
+            {#        ---------------------------CARDS------------------------#}
+            <div class='flex justify-between items-center'>
+                {% for each in attractive_accessories %}
+                    <div class='flex flex-col justify-center gap-2 items-center'>
+                        <div class='w-[200px] h-[200px] rounded-full'>
+                            <a href="{% url 'product_detail' each.id %}">
+                                <img src='{{ each.primary_image }}' alt="x"
+                                     class='w-full h-full object-cover rounded-full'/>
+                            </a>
+                        </div>
+                        <div class='flex flex-col gap-2'>
+                            <div class='flex flex-col gap-1 w-full px-2'>
+                                {% if each.discount_percent > 0 %}
+                                    <p class='text-sm text-red-600'>{{ each.discount_percent }}% off</p>
+                                {% else %}
+                                    <p class="text-sm text-gray-300">No Discount</p>
+                                {% endif %}
+                                <p class='font-semibold'>
+                                    {% if each.discount_percent > 0 %}
+                                        <span>Rs.{{ each.get_discounted_price }} </span>
+                                        <span class='decoration-1 line-through text-gray-500'>Rs.{{ each.price }}</span>
+                                        </p>
+                                    {% else %}
+                                        <span>Rs.{{ each.price }}</span>
+                                    {% endif %}
+                                <p class='text-sm'>{{ each.short_name }}</p>
+                            </div>
+                            <div class='flex items-center gap-2 w-full px-2'>
+                                {% if each.stock == 0 %}
+                                <button class="w-full p-1 bg-red-500 text-white rounded-lg cursor-not-allowed">
+                                    Out of Stock
+                                </button>
+                                {% else %}
+                                    <button
+                                            id="{{ each.id }}"
+                                            data-id="{{ each.id }}"
+                                            data-short_name="{{ each.short_name }}"
+                                            data-full_name="{{ each.full_name }}"
+                                            data-description="{{ each.description }}"
+                                            data-price="{{ each.price }}"
+                                            data-image="{{ each.primary_image }}"
+                                            data-stock="{{ each.stock }}"
+                                            data-category="{{ each.category }}"
+                                            onclick="toggleCart(this)"
+                                            class="w-full p-1 text-white rounded-lg bg-pink-500">
+                                        Add to Cart
+                                    </button>
+                                {% endif %}
+                                <svg xmlns="http://www.w3.org/2000/svg" class="ionicon w-10" viewBox="0 0 512 512">
+                                    <path
+                                            d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z"
+                                            fill="none" stroke="hotPink" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="32"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="w-full text-center text-2xl text-red-500">Something went wrong!!</p>
+                {% endfor %}
+
+            </div>
+        </div>
+
+
+        <div class='w-full px-14 py-10'>
+            <div class='flex justify-evenly'>
+
+                <div class='flex flex-col justify-center items-center gap-5'>
+                    <h1 class='text-2xl font-semibold'>Get Your Skin Products</h1>
+                    <div class='flex gap-5'>
+                        <div
+                                class='bg-[#ffd1ec] h-[100px] w-[100px] rounded-full flex justify-center items-center flex-col'>
+                            <p class='text-sm'>User Rs.</p>
+                            <p class='text-xl font-semibold'>600</p>
+                        </div>
+                        <div
+                                class='bg-[#ffd1ec] h-[100px] w-[100px] rounded-full flex justify-center items-center flex-col'>
+                            <p class='text-sm'>User Rs.</p>
+                            <p class='text-xl font-semibold'>600</p>
+                        </div>
+                        <div
+                                class='bg-[#ffd1ec] h-[100px] w-[100px] rounded-full flex justify-center items-center flex-col'>
+                            <p class='text-sm'>User Rs.</p>
+                            <p class='text-xl font-semibold'>600</p>
+                        </div>
+                    </div>
+                </div>
+                <div class='flex flex-col justify-center items-center gap-5'>
+                    <h1 class='text-2xl font-semibold'>Get Your Hair Products</h1>
+                    <div class='flex gap-5'>
+                        <div
+                                class='bg-[#dafffd] h-[100px] w-[100px] rounded-full flex justify-center items-center flex-col'>
+                            <p class='text-sm'>User Rs.</p>
+                            <p class='text-xl font-semibold'>600</p>
+                        </div>
+                        <div
+                                class='bg-[#dafffd] h-[100px] w-[100px] rounded-full flex justify-center items-center flex-col'>
+                            <p class='text-sm'>User Rs.</p>
+                            <p class='text-xl font-semibold'>600</p>
+                        </div>
+                        <div
+                                class='bg-[#dafffd] h-[100px] w-[100px] rounded-full flex justify-center items-center flex-col'>
+                            <p class='text-sm'>User Rs.</p>
+                            <p class='text-xl font-semibold'>600</p>
+                        </div>
+                    </div>
+                </div>
+                <div class='flex flex-col justify-center items-center gap-5'>
+                    <h1 class='text-2xl font-semibold'>Get Your Makeup Products</h1>
+                    <div class='flex gap-5'>
+                        <div
+                                class='bg-[#fff8ba] h-[100px] w-[100px] rounded-full flex justify-center items-center flex-col'>
+                            <p class='text-sm'>User Rs.</p>
+                            <p class='text-xl font-semibold'>600</p>
+                        </div>
+                        <div
+                                class='bg-[#fff8ba] h-[100px] w-[100px] rounded-full flex justify-center items-center flex-col'>
+                            <p class='text-sm'>User Rs.</p>
+                            <p class='text-xl font-semibold'>600</p>
+                        </div>
+                        <div
+                                class='bg-[#fff8ba] h-[100px] w-[100px] rounded-full flex justify-center items-center flex-col'>
+                            <p class='text-sm'>User Rs.</p>
+                            <p class='text-xl font-semibold'>600</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class='w-full px-16 pb-8 flex flex-col gap-2'>
+            <h1 class='text-xl font-semibold'>Best Outfit Deals</h1>
+
+            <div class='flex justify-between'>
+
+                {% for each in best_outfits %}
+                    <div class='flex flex-col gap-2'>
+                        <div class='w-[300px] h-[350px] rounded-2xl'>
+                            <a href="{% url 'product_detail' each.id %}">
+                                <img src="{{ each.primary_image }}" alt='X' class='w-full h-full object-cover rounded-2xl'/>
+                            </a>
+                        </div>
+                        <div class='flex flex-col gap-2'>
+                            <div class='flex flex-col gap-1 w-full px-2'>
+                                {% if each.discount_percent > 0 %}
+                                    <p class='text-sm text-red-600'>{{ each.discount_percent }}% off</p>
+                                {% else %}
+                                    <p class="text-sm text-gray-300">No Discount</p>
+                                {% endif %}
+                                <p class='font-semibold'>
+                                    {% if each.discount_percent > 0 %}
+                                        <span>Rs.{{ each.get_discounted_price }} </span>
+                                        <span class='decoration-1 line-through text-gray-500'>Rs.{{ each.price }}</span>
+                                        </p>
+                                    {% else %}
+                                        <span>Rs.{{ each.price }}</span>
+                                    {% endif %}
+                                <p class='text-sm'>{{ each.short_name }}</p>
+                            </div>
+                            <div class='flex items-center gap-2 w-full px-2'>
+                                {% if each.stock == 0 %}
+                                <button class="w-full p-1 bg-red-500 text-white rounded-lg cursor-not-allowed">
+                                    Out of Stock
+                                </button>
+                                {% else %}
+                                    <button
+                                            id="{{ each.id }}"
+                                            data-id="{{ each.id }}"
+                                            data-short_name="{{ each.short_name }}"
+                                            data-full_name="{{ each.full_name }}"
+                                            data-description="{{ each.description }}"
+                                            data-price="{{ each.price }}"
+                                            data-image="{{ each.primary_image }}"
+                                            data-stock="{{ each.stock }}"
+                                            data-category="{{ each.category }}"
+                                            onclick="toggleCart(this)"
+                                            class="w-full p-1 bg-pink-500 text-white rounded-lg">
+                                        Add to Cart
+                                    </button>
+                                {% endif %}
+                                <svg xmlns="http://www.w3.org/2000/svg" class="ionicon w-10" viewBox="0 0 512 512">
+                                    <path
+                                            d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z"
+                                            fill="none" stroke="hotPink" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="32"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+
+                {% endfor %}
+
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    {#    --------Search box script--------#}
+    <script>
+        $('#search-input').on('input', function () {
+            let data = $(this).val();
+
+            if (data.trim() !== '') {
+                $.ajax({
+                    url: '{% url "search" %}',
+                    type: 'GET',
+                    data: {
+                        'data': data
+                    },
+                    success: function (response) {
+                        if (response.length < 1) {
+                            return;
+                        }
+                        $('#search-result').empty().removeClass('hidden');
+                        response.forEach(each => {
+                            console.log(each)
+                            $('#search-result').append(`
+                        <a " class="search-item text-[1rem] cursor-pointer w-full p-1 hover:bg-gray-100" href="product/${each.id}">${each.short_name}</a>
+                    `);
+                        });
+                        $(document).on('click.hideSearchResult', function (event) {
+                            if (!$(event.target).closest('#search-input, #search-result').length) {
+                                $('#search-result').addClass('hidden');
+                                $(document).off('click.hideSearchResult');
+                            }
+                        });
+                    },
+                    error: function () {
+                        console.error("An error occurred while fetching search results.");
+                    }
+                });
+            } else {
+                $('#search-result').addClass('hidden').empty();
+                $(document).off('click.hideSearchResult');
+            }
+        });
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,96 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+    <script src="{% static 'index.js' %}"></script>
+    <title>{% block pageTitle %}{% endblock %}</title>
+    {% block style %}{% endblock %}
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        
+        .test {
+            background-color: rgb(255, 247, 247);
+        }
+
+        .hide-scrollbar {
+            overflow: scroll;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        .custom-number-input {
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
+        .custom-number-input::-webkit-outer-spin-button,
+        .custom-number-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+
+        .input-no-spinner::-webkit-inner-spin-button,
+        .input-no-spinner::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .input-no-spinner {
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+        
+        .profile-navigation {
+            background-color: white;
+            border-left: 2px solid hotpink;
+        }
+        
+        
+
+    </style>
+
+</head>
+<body>
+{% include 'header.html' %}
+
+{% block root %}
+{% endblock %}
+
+{% include 'footer.html' %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% block script %}{% endblock %}
+<script>
+    updateCart();
+    initialCartHandler();
+</script>
+
+</body>
+</html>

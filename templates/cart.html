@@ -1,0 +1,114 @@
+{% extends 'index.html' %}
+
+{% block root %}
+    <div class='flex flex-col items-center w-full relative'>
+
+        <div
+                class='h-[150px] w-1/3 bg-gradient-to-br from-orange-100 to-white absolute top-0 left-0 blur-3xl'></div>
+        <div
+                class='h-[150px] w-1/3 bg-gradient-to-bl from-pink-200 to-white absolute top-0 right-0 blur-3xl'></div>
+
+        <div class='flex flex-col items-center w-full px-14 z-10 gap-4'>
+            <h1 id="cart-item-count" class='text-lg mt-4 font-semibold'>Your Cart (4 items)</h1>
+
+
+            <div class='w-full px-14'>
+                <ul class='flex justify-between items-center text-center py-2 border-b-2 border-gray-200 text-gray-600'>
+                    <li class='w-[40%]'>Items</li>
+                    <li class='w-[15%]'>Price</li>
+                    <li class='w-[20%]'>Quantity</li>
+                    <li class='w-[20%]'>Total</li>
+                </ul>
+
+                <div id="cart-main" class='flex flex-col my-3 gap-3'>
+{#                    ---------------------CARD------------#}
+
+
+                    <h1 id="noItemsInfo" class="'w-full text-center text-xl font-semibold text-pink-500 hidden">No items are added in the cart!</h1>
+
+                    <div class='flex justify-end items-center rounded-md p-3'>
+                        <p class='w-[10%]'>Subtotal:</p>
+                        <p id="cart-sub-total" class='w-[20%] text-center'>Rs.0.00</p>
+                    </div>
+                    <div class='flex justify-end items-center rounded-md p-3'>
+                        <p class='w-[10%]'>Shipping Cost:</p>
+                        <p id="cart-shipping-cost" class='w-[20%] text-center'>Rs.0.00</p>
+                    </div>
+                    <div class='flex justify-end items-center rounded-md p-3'>
+                        <p class='w-[10%]'>Coupon Code:</p>
+                        <a href="#"
+                           class='w-[20%] text-center Rs.202002.20  hover:text-pink-500 hover:underline-offset-4 hover:underline duration-500'>Get
+                                                                                                                                               here</a>
+                    </div>
+                    <div class='flex justify-end items-center rounded-md p-3'>
+                        <p class='w-[10%]'>Grand Total:</p>
+                        <p id="cart-grand-total" class='w-[20%] text-center font-semibold text-lg'>Rs.0.00</p>
+                    </div>
+                    <div class='flex justify-end items-center px-14'>
+                        <div class='w-[30%] flex justify-end'>
+                            <form class="w-full flex items-center justify-center" method="post" action="{% url 'checkout' %}">
+                                {% csrf_token %}
+                                <input id="checkout_price" type="hidden" name="checkout_price" value="0">
+                                <input id="cart-data" type="hidden" name="cart_data" value="">
+                                <button id="checkout-button" class="text-white bg-pink-500 rounded-md p-2 w-[50%]">Checkout</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        const cart = JSON.parse(localStorage.getItem('cart')) || {};
+        const cartMain = $('#cart-main');
+        if (Object.keys(cart).length !== 0) {
+            for (const [key, value] of Object.entries(cart)) {
+                cartMain.prepend(`
+                    <div id="cart-view-${key}" class='flex justify-between items-center rounded-md border-b-2 border-gray-200 p-3'>
+                        <div class='w-[40%] flex gap-2 items-center'>
+                            <div class='w-[70px] h-[70px]'>
+                                <img src="../${value.image}" alt="x" class='w-full h-full object-cover rounded-md'/>
+                            </div>
+                            <div>
+                                <a class='font-bold hover:text-pink-500 duration-500' href="../product/${key}" >${value.full_name}</a>
+                                <p class='text-sm text-pink-600'>Category: ${value.category}</p>
+                            </div>
+                        </div>
+                        <div class='w-[15%] text-center text-gray-600 text-md'>
+                            <p>Rs. ${value.price}</p>
+                        </div>
+                        <div class='w-[20%] flex items-center justify-center'>
+                            <div class='border-[1px] border-gray-300 flex w-fit justify-center items-center px-2 rounded-md py-1.5'>
+                                <button id="cart-view-decrease-${key}"
+                                    data-id="${key}"
+                                    data-stock="${value.stock}"
+                                    data-parent="#cart-view-${key}"
+                                    onclick="handleIncreaseDecreaseCartPage(this, 'decrease', 'cart-view')"
+                                    class="decrease cursor-pointer select-none w-6 hover:bg-gray-100 duration-500">-</button>
+                                <label>
+                                    <input id="cart-view-input-${key}"
+                                           type='number'
+                                           class='appearance-none custom-number-input outline-none w-6 text-center'
+                                           value="${value.quantity}" />
+                                </label>
+                                <button id="cart-view-increase-${key}"
+                                    data-id="${key}"
+                                    data-stock="${value.stock}"
+                                    data-parent="#cart-view-${key}"
+                                    onclick="handleIncreaseDecreaseCartPage(this, 'increase', 'cart-view')"
+                                    class="increase cursor-pointer w-6 select-none hover:bg-gray-100 duration-500">+</button>
+                            </div>
+                        </div>
+                        <div class='w-[20%] text-center text-gray-600 text-md'>
+                            <p id="total-price-${key}">Rs. ${value.quantity * value.price}</p>
+                        </div>
+                    </div>
+                `);
+            }
+        }
+        cartTotalCalculation()
+    </script>
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block root %}
+    <div class='my-8 flex gap-28 relative w-full justify-center items-center'>
+        <div class='h-[150px] w-1/3 bg-gradient-to-br from-orange-200 to-white absolute top-0 left-0 blur-3xl -z-10'></div>
+        <div class='h-[150px] w-1/3 bg-gradient-to-bl from-pink-200 to-white absolute top-0 right-0 blur-3xl -z-10'></div>
+
+        <form class='flex flex-col justify-evenly items-center h-full' method="post">
+            {% csrf_token %}
+            <div class='w-full flex flex-col gap-1'>
+                <p class='text-pink-500 text-xl font-semibold w-full'>Welcome!</p>
+                <p class='text-sm text-gray-600 w-full'>Please Signup to continue</p>
+            </div>
+
+            <div class='p-2 rounded-md border-2 border-pink-300/20  bg-pink-100'>
+                <ion-icon name="person"></ion-icon>
+                <input type="email" placeholder='Email' name="email" required
+                       class='outline-none bg-transparent p-1 font-lg w-[300px]'/>
+            </div>
+            <div class='p-2 rounded-md border-2 border-pink-300/20  bg-pink-100'>
+                <ion-icon name="person"></ion-icon>
+                <input type="text" placeholder='Full name' name="full_name" required
+                       class='outline-none bg-transparent p-1 font-lg w-[300px]'/>
+            </div>
+            <div class='flex w-full justify-center items-center gap-2'>
+                <div class='flex flex-1 h-[1px] bg-gray-400'></div>
+                <p id="message_text" class='text-xs'>Keep it safe.</p>
+                <div class='flex flex-1 h-[1px] bg-gray-400'></div>
+            </div>
+
+            <div class='p-2 rounded-md border-2 border-pink-300/20  bg-pink-100'>
+                <ion-icon name="lock-closed"></ion-icon>
+                <input type="password" placeholder='Password' name="password" required
+                       class='outline-none bg-transparent p-1 font-lg w-[300px]'
+                       autocomplete="current-password"/>
+            </div>
+
+            <button id="signup_btn" type="submit"
+                    class='bg-gradient-to-r font-semibold from-orange-200 to-pink-300 p-2 w-2/3 rounded-md active:scale-95 duration-500 text-sm'>
+                Signup
+            </button>
+
+            <p class='text-xs'>Already have an Account? <span
+                    class='hover:underline underline-offset-4 duration-500'><a href="{% url 'login_view' %}">Login</a></span></p>
+        </form>
+
+        <div class='w-[450px] h-[400px]'>
+            <img src="{% static 'system/login_signup_banner.png' %}" alt="" class='w-full h-full object-cover'/>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            $('input[name="email"]').on('input', function () {
+                let email = $(this).val().trim();
+                
+                if (!email.endsWith('.com')) {
+                    $('input[name="email"]').css('color', 'red');
+                    $('#message_text').text('Email must end with .com').css('color', 'red');
+                    $('#signup_btn').prop('disabled', true).css('cursor', 'not-allowed');
+                    return; 
+                }
+
+      
+                $('input[name="email"]').css('color', 'black');
+                $('#message_text').text('');
+                $.ajax({
+                    url: '{% url "email_available" %}', 
+                    method: 'GET',
+                    data: { email: email },
+                    success: function (response) {
+                        if (response.available) {
+                            $('input[name="email"]').css('color', 'black');
+                            $('#message_text').text('Keep it safe.').css('color', 'black');
+                            $('#signup_btn').prop('disabled', false).css('cursor', 'pointer');
+                        } else {
+                            $('input[name="email"]').css('color', 'red');
+                            $('#message_text').text('Email is already taken.').css('color', 'red');
+                            $('#signup_btn').prop('disabled', true).css('cursor', 'not-allowed');
+                        }
+                    },
+                    error: function () {
+                        $('#message_text').text('Error checking email. Please try again later.').css('color', 'red');
+                        $('#signup_btn').prop('disabled', true).css('cursor', 'not-allowed');
+                    }
+                });
+            });
+        });
+
+    </script>
+{% endblock %}

@@ -1,0 +1,194 @@
+{% load static %}
+<div class='flex w-full flex-col shadow-md sticky top-0 z-30 bg-white'>
+
+    {#-----------------------Main Header-----------------------#}
+    <div id="mainHeader" class='flex p-3 items-center justify-between px-12 fixed top-0 w-full z-20 bg-white'>
+        <div class='flex gap-4 min-w-fit'>
+            <a class='flex justify-center items-center select-none cursor-pointer' href="{% url 'home' %}">
+                <img src='{% static 'system/logo.png' %}' width=60 alt="Logo"/>
+                <div class='text-pink-500 mt-auto'>
+                    <p class='text-xs italic'>The key to a New Me</p>
+                    <h1 class='font-medium text-xl'>Makeover Me</h1>
+                </div>
+            </a>
+
+
+            <div class='p-[1px] bg-gray-200 mt-3 mb-3 justify-center flex items-center rounded-md'></div>
+
+            <div class='mt-auto select-none'>
+
+                <div class='flex justify-center items-center gap-1'>
+                    <img width=8 src='{% static 'system/current.jpg' %}' alt="x"/>
+                    <p class='text-gray-400 text-sm'>Express delivery to</p>
+                </div>
+                <div class='cursor-pointer relative'>
+                    <p id="HeaderDropdownParent" class='px-2 py-1 w-fit rounded flex gap-8 items-center'
+                       onclick="handleHeaderDropdown()">Select City
+                        <ion-icon name="chevron-down-outline"></ion-icon>
+                    </p>
+                    <div class='absolute w-full bg-gray-50 shadow-2xl p-2 rounded-xl z-10 hidden'
+                         id="HeaderLocationDropdown">
+                        <ul class='flex flex-col gap-2 rounded-xl'>
+                            <li onclick="selectLocation('Pokhara')"
+                                class='hover:text-pink-600 duration-500 hover:bg-gray-100'>Pokhara
+                            </li>
+                            <li onclick="selectLocation('Kathmandu')"
+                                class='hover:text-pink-600 duration-500 hover:bg-gray-100'>Kathmandu
+                            </li>
+                            <li onclick="selectLocation('Chitwan')"
+                                class='hover:text-pink-600 duration-500 hover:bg-gray-100'>Chitwan
+                            </li>
+                            <li onclick="selectLocation('Lalitpur')"
+                                class='hover:text-pink-600 duration-500 hover:bg-gray-100'>Lalitpur
+                            </li>
+                            <li onclick="selectLocation('Bhaktapur')"
+                                class='hover:text-pink-600 duration-500 hover:bg-gray-100'>Bhaktapur
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <ul class='flex item-center gap-8 justify-between select-none'>
+            <li id="download-now-btn" class='flex justify-center items-center gap-1 bg-pink-100 p-2 rounded-2xl cursor-pointer'>
+                <ion-icon name="id-card-outline"></ion-icon>
+                Download now
+            </li>
+            <li class='px-2.5 flex justify-center items-center gap-1 relative cursor-pointer hover:text-pink-600 duration-500'>
+                <a href="
+                        {% if user.is_authenticated %}{% url 'profile_manager' %}{% else %}{% url 'login_view' %}{% endif %}">
+                    <ion-icon name="person-outline"></ion-icon>
+                    <span class='absolute rounded-full p-1 bg-red-600 top-0 right-0 {% if user.is_authenticated %}hidden{% else %}{% endif %}'></span>
+                    {% if user.is_authenticated %}Hi, {{ user.first_name }}{% else %}Hello, Login{% endif %}
+                </a>
+            </li>
+            <a class='flex justify-center items-center gap-1 cursor-pointer hover:text-pink-600 duration-500' href="{% url 'products' %}?category=Offers">
+                <ion-icon name="extension-puzzle-outline"></ion-icon>
+                Offers
+            </a>
+            <li id="header-cart"
+                class="relative flex justify-center items-center gap-1 cursor-pointer hover:text-pink-600 duration-500 group">
+                <a href="{% url 'cart_view' %}" class="inline-flex items-center gap-1">
+                    <ion-icon name="cart-outline" class="mt-0.5"></ion-icon>
+                    <p>Cart</p>
+                </a>
+
+                <div id="cart-hover-box" class="hidden flex-col p-2 rounded-md bg-white border-2 border-gray-100 px-3 shadow-md absolute mb-auto top-0 mt-10 w-[400px] right-0 text-black cursor-default group-hover:block">
+                    <div class="flex justify-center items-center">
+                        <p class="text-pink-500 font-semibold">Your Cart</p>
+                    </div>
+                    <div class="h-[1px] my-2 bg-gray-300 rounded-md"></div>
+                    <div class="max-h-60 overflow-y-scroll">
+                        <ul id="cart-hover-ul" class="flex flex-col gap-">
+{#                            ---------------li------------------#}
+                        </ul>
+                    </div>
+                    <a href="{% url 'cart_view' %}">
+                        <div class="flex justify-center items-center gap-1 bg-pink-500 text-white p-1 rounded-xl cursor-pointer mt-1">
+                            <ion-icon name="cart-outline"></ion-icon>
+                            View Cart
+                        </div>
+                    </a>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+
+    {#----------------------Text Slider----------------------#}
+    <div id="textSlider" class='bg-pink-500 p-1.5 flex justify-evenly text-white text-sm items-center '>
+        <p class='flex gap-1 items-center'><span
+                class='bg-white text-pink-500 flex justify-center items-center p-0.5 rounded-sm'><ion-icon
+                name="cart-outline"></ion-icon></span>SHOPPING VOUCHER UPTO Rs.1000
+        </p>
+        <p class='flex gap-1 items-center'><span
+                class='bg-white text-pink-500 flex justify-center items-center p-0.5 rounded-sm'><ion-icon
+                name="gift-outline"></ion-icon></span>SELECTABLE FREE GIFTS ON EVERY PURCHASE
+        </p>
+        <p class='flex gap-1 items-center'><span
+                class='bg-white text-pink-500 flex justify-center items-center p-0.5 rounded-sm'><ion-icon
+                name="storefront-outline"></ion-icon></span>ABOVE Rs.1000 (INSIDE POKHARA ONLY
+        </p>
+    </div>
+
+    {#----------------------Navigation----------------------#}
+    <div id="navigation" class='flex justify-center p-2'>
+        <ul class='flex justify-evenly items-center w-1/2'>
+            <a href="{% url 'products' %}?category=Men" class="cursor-pointer select-none hover:text-pink-500 duration-500">Men</a>
+            <a href="{% url 'products' %}?category=Women" class="cursor-pointer select-none hover:text-pink-500 duration-500">Women</a>
+            <a href="{% url 'products' %}?category=Kids" class="cursor-pointer select-none hover:text-pink-500 duration-500">Kids</a>
+            <a href="{% url 'products' %}?category=Beauty" class="cursor-pointer select-none hover:text-pink-500 duration-500">Beauty Products</a>
+            <a href="{% url 'products' %}?category=HairStyles" class="cursor-pointer select-none hover:text-pink-500 duration-500">Hair Styles</a>
+            <a href="{% url 'products' %}?category=PLUS" class="cursor-pointer select-none hover:text-pink-500 duration-500">PLUS</a>
+            <a href="{% url 'products' %}?category=Offers" class="cursor-pointer select-none hover:text-pink-500 duration-500">Offers</a>
+
+        </ul>
+    </div>
+
+    <script>
+
+        if (localStorage.getItem('selectedCity')) {
+            document.getElementById('HeaderDropdownParent').innerHTML = `${localStorage.getItem('selectedCity')} <ion-icon name="chevron-down-outline"></ion-icon>`;
+        }
+
+        function handleHeaderDropdown() {
+            const dropdown = document.getElementById('HeaderLocationDropdown');
+            dropdown.classList.toggle('hidden');
+
+            document.addEventListener('click', function handleClickOutside(event) {
+                const dropdownParent = document.getElementById('HeaderDropdownParent');
+
+                if (!dropdown.contains(event.target) && !dropdownParent.contains(event.target)) {
+                    dropdown.classList.add('hidden');
+                    document.removeEventListener('click', handleClickOutside);
+                }
+            });
+        }
+
+        function selectLocation(city) {
+            const parent = document.getElementById('HeaderDropdownParent');
+            const dropdown = document.getElementById('HeaderLocationDropdown');
+
+            parent.innerHTML = `${city} <ion-icon name="chevron-down-outline"></ion-icon>`;
+            localStorage.setItem('selectedCity', city);
+            cartTotalCalculation();
+            dropdown.classList.add('hidden');
+        }
+
+        function adjustLayout() {
+            const header = document.getElementById('mainHeader');
+            const textSlider = document.getElementById('textSlider');
+
+            if (header && textSlider) {
+                const headerHeight = header.offsetHeight;
+
+                textSlider.style.marginTop = `${headerHeight}px`;
+            }
+
+            const resizeHandler = () => {
+                if (header && textSlider) {
+                    const headerHeight = header.offsetHeight;
+                    textSlider.style.marginTop = `${headerHeight}px`;
+                }
+            };
+
+            window.addEventListener('load', resizeHandler);
+            window.addEventListener('resize', resizeHandler);
+
+            window.removeEventListener('resize', resizeHandler);
+            window.removeEventListener('load', resizeHandler);
+        }
+
+
+        adjustLayout();
+
+    </script>
+
+    <script>
+        const textSlider = document.getElementById('textSlider')
+        
+    </script>
+
+</div>

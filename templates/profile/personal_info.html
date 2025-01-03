@@ -1,0 +1,90 @@
+<div class='h-full justify-center py-8 items-center flex rounded-md'>
+    <div class='h-full w-5/6 flex flex-col justify-between'>
+        <div class='flex gap-2'>
+            <div class='text-7xl text-pink-500'>
+                <ion-icon name="shield-checkmark-outline"></ion-icon>
+            </div>
+            <div>
+                <h1 class='text-xl font-bold'>Personal Information</h1>
+                <p class='text-xs text-gray-400'>In order to access some features of the Service, you
+                                                 will
+                                                 have to fill your account details.
+                                                 You may use it for buying things, also for shipping
+                                                 process.</p>
+            </div>
+        </div>
+
+        <div class='justify-between items-center flex'>
+            <input type='text' placeholder='First Name' name="firstName"
+                   class='w-[48%] p-1 outline-none rounded-md border-2 border-gray-200'
+                   value="{{ user.first_name }}" disabled/>
+            <input type='text' placeholder='Last Name' name="lastName"
+                   class='w-[48%] p-1 outline-none rounded-md border-2 border-gray-200'
+                   value="{{ user.last_name }}" disabled/>
+        </div>
+
+        <div class='flex justify-center items-center'>
+            <input type='email' placeholder='Email' name="email"
+                   class='w-[100%] p-1 outline-none rounded-md border-2 border-gray-200'
+                   value="{{ user.email }}" disabled/>
+        </div>
+
+        <div class='justify-between items-center flex'>
+            <div
+                    class='flex w-[48%] px-1 rounded-md border-2 border-gray-200 p-0.5 items-center justify-center'>
+                <img class='h-[15px]'
+                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Flag_of_Nepal.svg/738px-Flag_of_Nepal.svg.png?20220926151831"
+                     alt=""/>
+                <input type='tel' placeholder='(+977) ____ ___ ___' name="phone"
+                       class='flex-1 p-0.5 flex outline-none' value="{{ user.phone }}" disabled/>
+            </div>
+            <div
+                    class='flex w-[48%] justify-center px-1 items-center p-0.5 rounded-md border-2 border-gray-200'>
+                <ion-icon name="calendar-outline"></ion-icon>
+                <input type="date" class="flex-1 flex p-0.5 px-1 outline-none no-spinner"
+                       value="{{ user.dob|date:'Y-m-d' }}" disabled contenteditable="false"/>
+
+            </div>
+        </div>
+
+        <div class='justify-between items-center flex'>
+            <input type='text' placeholder='Address'
+                   class='w-[48%] p-1 outline-none rounded-md border-2 border-gray-200' name="address" value="{{ user.address }}"  disabled/>
+            <input type='text' placeholder='Zip Code'
+                   class='w-[48%] p-1 outline-none rounded-md border-2 border-gray-200' name="zipCode" value="{{ user.zipcode }}" disabled/>
+        </div>
+
+        <div class='flex items-center justify-between'>
+            <div class='flex justify-between items-center w-1/2'>
+                <div class='flex flex-col items-center justify-center p-2 rounded-md h-16 w-24 border-2 border-gray-200 hover:bg-pink-500 hover:text-white duration-500 cursor-pointer'>
+                    <div>
+                        <ion-icon name="male-outline"></ion-icon>
+                    </div>
+                    <p>Male</p>
+                </div>
+                <div class='flex flex-col items-center justify-center p-2 rounded-md h-16 w-24 border-2 border-gray-200 hover:bg-pink-500 hover:text-white duration-500 cursor-pointer'>
+                    <div>
+                        <ion-icon name="female-outline"></ion-icon>
+                    </div>
+                    <p>Female</p>
+                </div>
+                <div class='flex flex-col items-center justify-center rounded-md h-16 w-24 border-2 border-gray-200 hover:bg-pink-500 hover:text-white duration-500 cursor-pointer'>
+                    <div>
+                        <ion-icon name="male-female-outline"></ion-icon>
+                    </div>
+                    <p>Other</p>
+                </div>
+            </div>
+
+            <div class="flex-1 flex justify-center items-center">
+                <button id="profile-info-edit-btn"
+                        class="p-2 border-2 border-pink-500 text-pink-500 rounded-md w-[50%]"
+                        onclick="editProfile()">Edit Profile
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
